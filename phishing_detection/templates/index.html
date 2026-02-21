@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Ultimate Phishing Protection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(77,184,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(77,184,255,0.15) 0%, transparent 50%);
+            z-index: -1;
+            animation: cyberPulse 20s ease-in-out infinite;
+        }
+        
+        @keyframes cyberPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .container { 
+            background: rgba(15, 15, 25, 0.97);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(77, 184, 255, 0.3);
+            border-radius: 25px;
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.7),
+                0 0 100px rgba(77, 184, 255, 0.2);
+            padding: 45px;
+            max-width: 700px;
+            width: 95%;
+            margin: 20px auto;
+            animation: slideUp 1s ease-out;
+            position: relative;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 3em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4db8ff, #00f5ff, #4db8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(77,184,255,0.5)); }
+            to { filter: drop-shadow(0 0 25px rgba(77,184,255,0.8)); }
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.15em;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            background: rgba(77, 184, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(77, 184, 255, 0.2);
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 15px;
+            background: rgba(25, 25, 45, 0.6);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(77, 184, 255, 0.15);
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6em;
+            color: #4db8ff;
+            font-weight: 800;
+        }
+        
+        .input-group { 
+            margin-bottom: 28px;
+        }
+        
+        label { 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px; 
+            color: #b8b8b8; 
+            font-weight: 500; 
+            font-size: 1.08em;
+        }
+        
+        select, input, textarea { 
+            width: 100%; 
+            padding: 20px 22px; 
+            background: rgba(20, 20, 40, 0.9);
+            border: 2px solid rgba(77, 184, 255, 0.4);
+            border-radius: 18px; 
+            font-size: 16px; 
+            color: #e8e8e8;
+            transition: all 0.4s ease;
+        }
+        
+        select:focus, input:focus, textarea:focus { 
+            border-color: #4db8ff;
+            box-shadow: 0 0 0 4px rgba(77,184,255,0.25);
+            transform: translateY(-2px);
+            background: rgba(30, 30, 55, 0.95);
+        }
+        
+        textarea { height: 130px; resize: vertical; }
+        
+        .scan-btn { 
+            width: 100%; 
+            padding: 22px; 
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            color: white; 
+            border: none; 
+            border-radius: 22px; 
+            font-size: 1.35em; 
+            font-weight: 800;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer; 
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-btn:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(255, 71, 87, 0.5);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 24px; height: 24px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin-left: 12px;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        #result { 
+            margin-top: 35px; 
+            padding: 35px; 
+            border-radius: 25px; 
+            text-align: center; 
+            font-weight: 800; 
+            font-size: 1.45em; 
+            display: none; 
+            animation: resultSlide 0.8s ease-out;
+        }
+        
+        @keyframes resultSlide {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        #result.success { 
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.25), rgba(39, 174, 96, 0.2));
+            border: 2px solid #2ecc71;
+            box-shadow: 0 0 40px rgba(46, 204, 113, 0.4);
+        }
+        
+        #result.danger { 
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.25));
+            border: 2px solid #e74c3c;
+            box-shadow: 0 0 60px rgba(231, 76, 60, 0.7);
+            animation: dangerPulse 1.2s ease-in-out infinite;
+        }
+        
+        @keyframes dangerPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(231,76,60,0.6); }
+            50% { box-shadow: 0 0 70px rgba(231,76,60,1); }
+        }
+        
+        .icon { font-size: 5em; margin-bottom: 20px; }
+        .confidence { 
+            background: rgba(10, 10, 25, 0.9); 
+            padding: 15px 30px; 
+            border-radius: 35px; 
+            display: inline-block; 
+            margin: 20px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.25em;
+            border: 1px solid rgba(77, 184, 255, 0.5);
+        }
+        
+        .notification-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(77, 184, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(77, 184, 255, 0.3);
+        }
+        
+        .notification-btn {
+            background: linear-gradient(135deg, #4db8ff, #00f5ff);
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            color: #0c0c0c;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(77, 184, 255, 0.3);
+        }
+        
+        .notification-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(77, 184, 255, 0.5);
+        }
+        
+        .notification-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .status-enabled { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .status-disabled { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+        
+        @keyframes flash {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3) sepia(0.3); }
+        }
+        
+        @media (max-width: 768px) {
+            .container { margin: 15px; padding: 30px; }
+            .logo { font-size: 2.3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i> PHISHGUARD AI
+            </div>
+            <p class="subtitle">Military-Grade Real-Time Phishing Detection</p>
+            <!-- ✅ 99.9% STAT REMOVED - ONLY 3 STATS NOW -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">0.02s</div>
+                    <div>Response Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><i class="fas fa-bell"></i></div>
+                    <div>Instant Alerts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><i class="fas fa-bolt"></i></div>
+                    <div>Real-Time</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label><i class="fas fa-layer-group"></i> Detection Mode</label>
+            <select id="type">
+                <option value="url">🌐 URL Analysis</option>
+                <option value="email">📧 Email Content</option>
+            </select>
+        </div>
+        
+        <div class="input-group">
+            <label id="label">
+                <i class="fas fa-link"></i> Target URL
+            </label>
+            <input type="text" id="content" placeholder="https://example.com or http://192.168.1.1/admin or paste email..." />
+        </div>
+        
+        <button class="scan-btn" onclick="detectPhishing()">
+            <i class="fas fa-search"></i> INITIATE SCAN
+            <span id="loading" class="loading" style="display:none;"></span>
+        </button>
+        
+        <div id="result">
+            <div class="icon" id="icon"></div>
+            <div id="result-text"></div>
+            <div id="confidence" class="confidence"></div>
+            <div id="suggestion"></div>
+            <div class="notification-section">
+                <button class="notification-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i> 🔔 ENABLE INSTANT ALERTS
+                </button>
+                <div id="notification-status" class="notification-status status-disabled">
+                    Notifications: <strong>DISABLED</strong> - Click to enable
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔥 PERFECT NOTIFICATION SYSTEM
+        let audioContext = null;
+        let notificationsEnabled = false;
+        
+        const typeSelect = document.getElementById('type');
+        const label = document.getElementById('label');
+        const content = document.getElementById('content');
+        const loading = document.getElementById('loading');
+        const scanIcon = document.querySelector('.scan-btn i');
+        const notifStatus = document.getElementById('notification-status');
+        
+        // Dynamic labels
+        typeSelect.onchange = () => {
+            const isUrl = typeSelect.value === 'url';
+            label.innerHTML = isUrl ? 
+                '<i class="fas fa-link"></i> Target URL' : 
+                '<i class="fas fa-envelope"></i> Email Content';
+            content.placeholder = isUrl ? 
+                'http://192.168.1.1/admin or https://example.com' : 
+                'Paste suspicious email content here...';
+        };
+        
+        // PERFECT NOTIFICATION SYSTEM
+        function initNotifications() {
+            if (Notification.permission === 'granted') {
+                notificationsEnabled = true;
+                updateNotifStatus(true);
+                console.log('🔔 Notifications already enabled');
+            } else if (Notification.permission === 'default') {
+                console.log('🔔 Will request notifications on first phishing');
+            }
+        }
+        
+        function toggleNotifications() {
+            if (Notification.permission === 'granted') {
+                notificationsEnabled = true;
+                updateNotifStatus(true);
+                showToast('🔔 Instant alerts are ACTIVE!');
+            } else if (Notification.permission === 'denied') {
+                showToast('❌ Notifications blocked. Enable in browser settings.');
+            } else {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        notificationsEnabled = true;
+                        updateNotifStatus(true);
+                        showToast('✅ Notifications ENABLED! Ready for instant alerts.');
+                    } else {
+                        updateNotifStatus(false);
+                        showToast('🔔 Notifications disabled. Click again anytime.');
+                    }
+                });
+            }
+        }
+        
+        function updateNotifStatus(enabled) {
+            notificationsEnabled = enabled;
+            notifStatus.className = enabled ? 'notification-status status-enabled' : 'notification-status status-disabled';
+            notifStatus.innerHTML = enabled ? 
+                'Notifications: <strong>ENABLED</strong> ✅' : 
+                'Notifications: <strong>DISABLED</strong> - Click to enable';
+        }
+        
+        // 🔥 ULTIMATE PHISHING NOTIFICATION
+        function showPhishingNotification(result, confidence) {
+            console.log('🚨 PHISHING NOTIFICATION TRIGGERED');
+            
+            if (notificationsEnabled && Notification.permission === 'granted') {
+                const notification = new Notification('🚨 PHISHGUARD - CRITICAL ALERT!', {
+                    body: `PHISHING DETECTED!\nConfidence: ${confidence}\n❌ DO NOT CLICK ANY LINKS!\n🛡️ PhishGuard has protected you`,
+                    icon: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiNGRjRGMzMiLz4KPHBhdGggZD0iTTIxIDIzTDI5IDI5TDQzIDIxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiLz4KPC9zdmc+',
+                    badge: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGRjRGMzIiLz4KPC9zdmc+',
+                    vibrate: [300, 100, 300],
+                    tag: 'phishguard-critical',
+                    requireInteraction: true,
+                    actions: ['close', 'report']
+                });
+                
+                setTimeout(() => notification.close(), 15000);
+                console.log('✅ Browser notification sent!');
+            } else {
+                showToast('🔔 Enable notifications for instant phishing alerts!');
+            }
+        }
+        
+        // EMERGENCY ALERT SOUND
+        function playAlertSound() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            const notes = [800, 400, 600, 900];
+            notes.forEach((freq, i) => {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.frequency.value = freq;
+                    gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                }, i * 150);
+            });
+        }
+        
+        // SCREEN FLASH EFFECT
+        function flashScreen() {
+            document.body.style.animation = 'flash 0.8s ease-in-out';
+            setTimeout(() => document.body.style.animation = '', 800);
+        }
+        
+        // TOAST NOTIFICATIONS
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; 
+                background: linear-gradient(135deg, #4db8ff, #00f5ff);
+                color: #0c0c0c; padding: 15px 25px; border-radius: 15px; 
+                box-shadow: 0 15px 35px rgba(77,184,255,0.4); z-index: 10000;
+                font-family: 'Orbitron', monospace; font-weight: 700; font-size: 14px;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+        
+        // MAIN SCAN FUNCTION
+        async function detectPhishing() {
+            if (!content.value.trim()) {
+                showToast('Please enter URL or email content!');
+                return;
+            }
+            
+            scanIcon.style.display = 'none';
+            loading.style.display = 'inline-block';
+            
+            const data = { type: typeSelect.value, content: content.value };
+            
+            try {
+                const response = await fetch('/detect', { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data) 
+                });
+                const res = await response.json();
+                
+                scanIcon.style.display = 'inline';
+                loading.style.display = 'none';
+                
+                const resultDiv = document.getElementById('result');
+                document.getElementById('result-text').textContent = res.result;
+                document.getElementById('confidence').textContent = res.confidence;
+                document.getElementById('suggestion').textContent = res.suggestion;
+                resultDiv.className = res.alert || '';
+                
+                if (res.alert === 'danger') {
+                    document.getElementById('icon').innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                    playAlertSound();
+                    flashScreen();
+                    setTimeout(() => showPhishingNotification(res.result, res.confidence), 500);
+                } else if (res.alert === 'warning') {
+                    document.getElementById('icon').innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                } else {
+                    document.getElementById('icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+                }
+                
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                scanIcon.style.display = 'inline';
+                loading.style.display = 'none';
+                showToast('Server error. Restart: python train_and_run.py');
+            }
+        }
+        
+        // INIT ON LOAD
+        document.addEventListener('DOMContentLoaded', function() {
+            initNotifications();
+            content.focus();
+        });
+        
+        // ENTER KEY SUPPORT
+        content.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') detectPhishing();
+        });
+    </script>
+</body>
+</html>
