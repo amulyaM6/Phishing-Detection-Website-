@@ -1,8 +1,8 @@
 # Phishing-Detection-Website-
 PhishGuard AI-Phishing Detection This website is created to detect any phishing activity in URLs and Emails
-\n
+
 **PROBLEM STATEMENT**: Develop an AI-based system that detects phishing emails/URLs in real-time and alerts users
-\n
+
 Phishing attacks increased 58% in 2025 causing $52B in global losses. Current solutions fail because:
 **Traditional filters miss 40% of phishing** (zero-day attacks)  
 **No real-time user feedback** (click before warning)  
