@@ -28,7 +28,7 @@ Responsive: CSS Grid + Mobile-first design
 
 **Setup Instructions**
 # 1. Clone + Install
-git clone https://github.com/amulyamurali/PhishGuard-AI.git
+git clone https://github.com/amulyaM6/Phishing-Detection-Website-.git
 cd PhishGuard-AI
 pip install -r requirements.txt
 
