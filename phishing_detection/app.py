@@ -20,7 +20,7 @@ PHISHING_URL_KEYWORDS = [
     'paypal', 'pay-pal', 'paypa1', 'stripe', 'visa', 'mastercard', 'amex', 'discover',
     
     # Brand Impersonation (60 keywords)
-    'g00gle', 'go0gle', 'google', 'amaz0n', 'amzon', 'netf1ix', 'netflix', 'micros0ft',
+    'g00gle', 'go0gle', 'google', 'amaz0n', 'amzon', 'netf1ix', 'netflix', 'micros0ft','gooogle', 'goooogle','gooooogle', 'goooooooooogle',
     'microsoft', 'apple', 'icloud', 'outlook', 'hotmail', 'yahoo', 'ebay', 'amazon',
     
     # Scam Bait (60 keywords)
@@ -206,3 +206,4 @@ if __name__ == '__main__':
     print("✅ 500+ KEYWORDS - 100% PHISHING DETECTION")
     print("✅ URL + EMAIL - IMPOSSIBLE TO FAIL")
     app.run(debug=True, host='0.0.0.0', port=5000)
+
